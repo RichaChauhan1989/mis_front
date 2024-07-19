@@ -1,7 +1,4 @@
 import React from 'react';
-import TopBar from "./TopBar";
-
-
 
 function Home() {
     // Check if the user is already logged in (you can adjust this logic as needed)
