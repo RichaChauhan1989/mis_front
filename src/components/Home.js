@@ -11,9 +11,19 @@ function Home() {
         return null; // No need to render anything on this page
     }
 
+    const homeContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '50vh',
+    textAlign: 'center'
+  };
+
     return (
-        <div>
+        <div style={homeContainerStyle}>
+            <p>
             <h1>Welcome to MIS Application!</h1>
+            </p>
 
         </div>
     );

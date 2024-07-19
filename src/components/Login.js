@@ -38,7 +38,7 @@ function Login(props) {
                 setLogin_status("Login Success!")
                 localStorage.setItem('authToken', response.data.token);
                 localStorage.setItem('username', username);
-window.location.href = 'main';
+                window.location.href = 'main';
             })
             .catch((error) => {
                 console.log(error);
@@ -46,9 +46,23 @@ window.location.href = 'main';
             });
     }
 
+    const loginContainerStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '50vh',
+        textAlign: 'center',
+        flexDirection: 'column',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        marginBottom: '10px',
+    };
+
     return (
-        <div>
-            <h1>login page</h1>
+        <div style={loginContainerStyle}>
+            <p>
+                <h1>Login</h1>
+            </p>
             <p>Username <input id={"username"} type={'text'} onChange={usernameHandler}/></p>
             <p>Password <input id={"password"} type={'password'} onChange={passwordHandler}/></p>
             <p>
