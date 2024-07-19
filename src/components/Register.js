@@ -1,53 +1,73 @@
-import React, { useEffect, useState } from 'react'
-import './App.css';
+import React, { useState } from 'react';
 
-function Register() {
-    const data= {username:"", email:"", password:""}
-    const [inputData, setInputData] = useState(data)
-    const [flag, setFlag] = useState(false)
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
 
-    useEffect(()=>{
-        console.log("Registered")
-    }, [flag])
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-    function handleData(e){
-        setInputData({...inputData, [e.target.username]:e.target.value})
-        console.log(inputData)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('\n' +
+          'https://mis-back-snowy.vercel.app/chat/api/userprofiles/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+     debugger;
+      if (response.ok) {
+        alert('User registered successfully!');
+        window.location.href = 'home';
+
+
+        // Redirect to a success page or handle as needed
+      } else {
+        console.error('Registration failed. Please check your input.');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
     }
+  };
 
-    function handleSubmit(e){
-        e.preventDefault();
-        if(!inputData.username || !inputData.email || !inputData.password ){
-            alert("All fields are Mandatory")
-        }
-        else{
-            setFlag(true)
-        }
+  return (
+    <div>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  );
+};
 
-    }
-    return (
-        <>
-        <pre>{(flag)?<h2 className='ui-define'>Hello {inputData.username}, You've Registered Successfully</h2>:""}</pre>
-        <form className='container' onSubmit={handleSubmit}>
-        <div className='header'>
-            <h1>Registration Form</h1>
-        </div>
-        <div>
-            <input type='text' placeholder="Enter Your Name" name="name" value={inputData.username} onChange={handleData}></input>
-        </div>
-        <div>
-            <input type='text' placeholder="Enter Your Email" name="email" value={inputData.email} onChange={handleData}></input>
-        </div>
-        <div>
-            <input type='text' placeholder="Enter Your Password" name="password" value={inputData.password} onChange={handleData}></input>
-        </div>
-        <div>
-            <button type='submit'>Submit</button>
-        </div>
-
-        </form>
-        </>
-    )
-}
-
-export default Register
+export default RegistrationForm;

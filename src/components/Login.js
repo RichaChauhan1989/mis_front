@@ -34,7 +34,11 @@ function Login(props) {
         axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data));
+                debugger;
                 setLogin_status("Login Success!")
+                localStorage.setItem('authToken', response.data.token);
+                localStorage.setItem('username', username);
+window.location.href = 'main';
             })
             .catch((error) => {
                 console.log(error);
